@@ -4,8 +4,6 @@ package Div2A;
 https://codeforces.com/contest/731/problem/A
  */
 
-
-
 import java.util.Scanner;
 
 public class NightAtTheMuseum {

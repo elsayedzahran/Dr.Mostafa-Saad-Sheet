@@ -1,26 +1,24 @@
 package Div2A;
 // problim link
 /*
-https://codeforces.com/contest/405/problem/A
+https://codeforces.com/contest/265/problem/A
  */
 
-
-import java.util.Arrays;
 import java.util.Scanner;
 
-public class GravityFlip {
+public class ColorfulStonesSimplifiedEdition {
     static Scanner input = new Scanner(System.in);
     public static void main(String[] args) {
-        int numberOfBoxes = input.nextInt();
-        input.nextLine();
-        int[] boxes = new int[numberOfBoxes];
-        for (int i = 0 ; i < numberOfBoxes ; i++){
-            boxes[i] = input.nextInt();
+
+        String string1 = input.next();
+        String string2 = input.next();
+
+        int idx = 0;
+        for (int i = 0 ; i < string2.length() ; i++){
+            if ( string1.charAt(idx) == string2.charAt(i)){
+                idx++;
+            }
         }
-        Arrays.sort(boxes);
-        for (int column : boxes){
-            System.out.print(column + " ");
-        }
-        System.out.println();
+        System.out.println(idx + 1);
     }
 }

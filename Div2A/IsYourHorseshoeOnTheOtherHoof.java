@@ -1,24 +1,22 @@
 package Div2A;
 // problim link
 /*
-https://codeforces.com/contest/732/problem/A
+https://codeforces.com/contest/228/problem/A
  */
 
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
-public class BuyAShovel {
+public class IsYourHorseshoeOnTheOtherHoof {
     static Scanner input = new Scanner(System.in);
     public static void main(String[] args) {
-        int k = input.nextInt();
-        int r = input.nextInt();
-
-        int mod = k % 10;   
-        int i = 1;
-        for ( ; i <= 9 ; i++){
-            if ((mod * i)%10 - r == 0 || (mod * i)%10 == 0){
-                break;
-            }
+        Set<Integer> shoes = new HashSet<>();
+        for (int i = 0 ; i < 4 ; i++){
+            int shoe = input.nextInt();
+            shoes.add(shoe);
         }
-        System.out.println(i);
+        System.out.println(4-shoes.size());
+
     }
 }

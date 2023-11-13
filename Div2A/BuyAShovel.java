@@ -1,23 +1,24 @@
 package Div2A;
 // problim link
 /*
-https://codeforces.com/contest/731/problem/A
+https://codeforces.com/contest/732/problem/A
  */
 
 import java.util.Scanner;
 
-public class NightAtTheMuseum {
+public class BuyAShovel {
     static Scanner input = new Scanner(System.in);
     public static void main(String[] args) {
-        String word = input.next();
-        String alphabet = "abcdefghijklmnopqrstuvwxyz";
-        int steps = 0;
-        int start = 0;
-        for (int i = 0; i < word.length(); i++) {
-            int distance = Math.abs(alphabet.indexOf(word.charAt(i)) - start);
-            steps += Math.min(distance, 26 - distance);
-            start = alphabet.indexOf(word.charAt(i));
+        int k = input.nextInt();
+        int r = input.nextInt();
+
+        int mod = k % 10;
+        int i = 1;
+        for ( ; i <= 9 ; i++){
+            if ((mod * i)%10 - r == 0 || (mod * i)%10 == 0){
+                break;
+            }
         }
-        System.out.println(steps);
+        System.out.println(i);
     }
 }
