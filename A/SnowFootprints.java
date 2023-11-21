@@ -1,59 +1,40 @@
+package A;
+// problim link
+/*
+https://codeforces.com/contest/298/problem/A
+ */
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
-public class Main {
+public class SnowFootprints {
     static Reader input = new Reader();
-    static boolean[] prime;
     public static void main(String[] args) {
-        int t = input.nextInt();
-        while(t-- > 0){
-            int n = input.nextInt();
-            int[] arr = input.nextIntArray(n);
 
-        }
+        int n = input.nextInt();
 
-    }
+        char[] string = input.next().toCharArray();
+        List<Integer> left = new ArrayList<>();
+        List<Integer> right = new ArrayList<>();
 
-
-
-    private static void seive(int n) {
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
+        for (int i = 0 ; i < n ; i++){
+            if (string[i] == 'L'){
+                left.add(i+1);
+            }else if (string[i] == 'R'){
+                right.add(i+1);
             }
         }
-    }
+        System.out.println(left.size() == 0 ? right.get(right.size()-1) + " " + (right.get(right.size()-1) + 1)
+                : left.get(0) + " " + (left.get(0) - 1));
 
-    public static long gcd(long a, long b) {
-        if (b == 0)
-            return a;
-        return gcd(b, a % b);
-    }
-
-
-    private static boolean isPrime(int n) {
-        if (n <= 1)
-            return false;
-        if (n <= 3)
-            return true;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
-                return false;
-            }
-        }
-        return true;
     }
 
     static class Reader extends PrintWriter {
 
         private final BufferedReader r;
         private StringTokenizer st;
-        // standard input
 
         public Reader() {
             this(System.in, System.out);

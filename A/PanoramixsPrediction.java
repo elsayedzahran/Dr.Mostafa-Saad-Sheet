@@ -1,51 +1,39 @@
+package A;
+// problim link
+/*
+https://codeforces.com/contest/80/problem/A
+ */
+
 
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class Main {
+public class PanoramixsPrediction {
     static Reader input = new Reader();
-    static boolean[] prime;
     public static void main(String[] args) {
-        int t = input.nextInt();
-        while(t-- > 0){
-            int n = input.nextInt();
-            int[] arr = input.nextIntArray(n);
+        int n = input.nextInt();
+        int m = input.nextInt();
 
-        }
-
-    }
-
-
-
-    private static void seive(int n) {
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
+        for (int i = n + 1; i < m ; i++) {
+            if (isPrime(i)) {
+                System.out.println("NO");
+                return;
             }
         }
+
+        System.out.println(isPrime(m) ? "YES" : "NO");
+
     }
-
-    public static long gcd(long a, long b) {
-        if (b == 0)
-            return a;
-        return gcd(b, a % b);
-    }
-
-
-    private static boolean isPrime(int n) {
+    static boolean isPrime(int n) {
         if (n <= 1)
             return false;
         if (n <= 3)
             return true;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
+
+        for (int i = 2; i * i <= n; i++)
+            if (n % i == 0)
                 return false;
-            }
-        }
+
         return true;
     }
 

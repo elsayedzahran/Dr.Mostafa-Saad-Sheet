@@ -1,48 +1,69 @@
+package A;
+// problim link
+/*
+https://codeforces.com/contest/143/problem/A
+ */
 
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class Main {
+public class HelpVasilisaTheWise2 {
     static Reader input = new Reader();
-    static boolean[] prime;
     public static void main(String[] args) {
-        int t = input.nextInt();
-        while(t-- > 0){
-            int n = input.nextInt();
-            int[] arr = input.nextIntArray(n);
+        int[] inputs = input.nextIntArray(6);
+        int[][] arr = new int[2][2];
 
-        }
+        boolean ok = false;
+        for (int i = 1 ; i <= 9 ; i++){
+            arr[0][0] = i;
+            arr[0][1] = inputs[0] - arr[0][0];
+            arr[1][0] = inputs[2] - arr[0][0];
+            arr[1][1] = inputs[1] - arr[1][0];
 
-    }
-
-
-
-    private static void seive(int n) {
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
+            if (valid(arr, inputs)){
+                ok = true;
+                break;
             }
         }
+        if (!ok){
+            System.out.println(-1);
+            return;
+        }
+        System.out.println(arr[0][0] + " " + arr[0][1]);
+        System.out.println(arr[1][0] + " " + arr[1][1]);
+
     }
 
-    public static long gcd(long a, long b) {
-        if (b == 0)
-            return a;
-        return gcd(b, a % b);
-    }
-
-
-    private static boolean isPrime(int n) {
-        if (n <= 1)
+    private static boolean valid(int[][] arr, int[] inputs) {
+        int[] freq = new int[10];
+        for (int i = 0 ; i < 2 ; i++){
+            for (int j = 0 ; j < 2 ; j++){
+                if (arr[i][j] < 1 || arr[i][j] > 9){
+                    return false;
+                }
+                freq[arr[i][j]]++;
+            }
+        }
+        if (arr[0][0] + arr[0][1] != inputs[0]) {
             return false;
-        if (n <= 3)
-            return true;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
+        }
+        if (arr[1][0] + arr[1][1] != inputs[1]) {
+            return false;
+        }
+        if (arr[0][0] + arr[1][0] != inputs[2]) {
+            return false;
+        }
+        if (arr[0][1] + arr[1][1] != inputs[3]) {
+            return false;
+        }
+        if (arr[0][0] + arr[1][1] != inputs[4]) {
+            return false;
+        }
+        if (arr[0][1] + arr[1][0] != inputs[5]) {
+            return false;
+        }
+        for (int i = 0 ; i < 10 ; i++){
+            if (freq[i] > 1){
                 return false;
             }
         }
@@ -53,7 +74,6 @@ public class Main {
 
         private final BufferedReader r;
         private StringTokenizer st;
-        // standard input
 
         public Reader() {
             this(System.in, System.out);

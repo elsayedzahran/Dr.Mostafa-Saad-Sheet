@@ -1,59 +1,33 @@
+package A;
+// problim link
+/*
+https://codeforces.com/contest/296/problem/A
+*/
 
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class Main {
+public class YaroslavAndPermutations {
     static Reader input = new Reader();
-    static boolean[] prime;
     public static void main(String[] args) {
-        int t = input.nextInt();
-        while(t-- > 0){
-            int n = input.nextInt();
-            int[] arr = input.nextIntArray(n);
-
-        }
-
-    }
-
-
-
-    private static void seive(int n) {
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
+        int n = input.nextInt();
+        int[] arr = input.nextIntArray(n);
+        int[] freq = new int[1001];
+        int cnt = 0, maxfreq = 0;
+        for (int num : arr){
+            freq[num]++;
+            if (freq[num] == 1){
+                cnt++;
             }
+            maxfreq = Math.max(freq[num], maxfreq);
         }
-    }
-
-    public static long gcd(long a, long b) {
-        if (b == 0)
-            return a;
-        return gcd(b, a % b);
-    }
-
-
-    private static boolean isPrime(int n) {
-        if (n <= 1)
-            return false;
-        if (n <= 3)
-            return true;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
-                return false;
-            }
-        }
-        return true;
+        System.out.println(maxfreq <= (n+1)/2 ? "YES" : "NO");
     }
 
     static class Reader extends PrintWriter {
 
         private final BufferedReader r;
         private StringTokenizer st;
-        // standard input
 
         public Reader() {
             this(System.in, System.out);

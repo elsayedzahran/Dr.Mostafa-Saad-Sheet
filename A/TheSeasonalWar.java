@@ -1,52 +1,61 @@
+package A;
+// problim link
+/*
+https://vjudge.net/problem/UVA-352
+ */
 
 import java.io.*;
+import java.util.List;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
-public class Main {
+public class TheSeasonalWar {
     static Reader input = new Reader();
-    static boolean[] prime;
-    public static void main(String[] args) {
-        int t = input.nextInt();
-        while(t-- > 0){
-            int n = input.nextInt();
-            int[] arr = input.nextIntArray(n);
+    static PrintWriter output = new PrintWriter(System.out);
+    static List<Integer>[] graph;
+    static int n;
+    static char[][] grid;
+    static int[] X = {0, 0, 1, -1, 1, -1, 1, -1};
+    static int[] Y = {1, -1, 0, 0, 1, -1, -1, 1};
+    static int[] per;
+    static boolean[] vis;
+    static boolean[][] visited;
+    public static void main(String[] args) throws IOException {
+        Scanner in = new Scanner(System.in);
+        int counter = 1;
+        while (input.hasNext()){
+            n = input.nextInt();
+            grid = new char[n][n];
+            visited = new boolean[n][n];
+            int result = 0;
 
+            for (int i = 0; i < n; i++) {
+                grid[i] = input.next().toCharArray();
+            }
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (grid[i][j] == '1') {
+                        dfs(i, j);
+                        result++;
+                    }
+                }
+            }
+            System.out.println("Image number " + counter++ + " contains " + result + " war eagles.");
         }
 
     }
 
+    private static void dfs(int i, int j) {
 
-
-    private static void seive(int n) {
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
+        grid[i][j] = '0';
+        for (int k = 0 ; k < 8 ; k++){
+            if (valid(i + X[k], j + Y[k])) {
+                dfs(i + X[k], j + Y[k]);
             }
         }
     }
-
-    public static long gcd(long a, long b) {
-        if (b == 0)
-            return a;
-        return gcd(b, a % b);
-    }
-
-
-    private static boolean isPrime(int n) {
-        if (n <= 1)
-            return false;
-        if (n <= 3)
-            return true;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
-                return false;
-            }
-        }
-        return true;
+    private static boolean valid(int i, int j){
+        return i < n && i >= 0 && j < n && j >= 0 && grid[i][j] == '1';
     }
 
     static class Reader extends PrintWriter {
@@ -129,4 +138,5 @@ public class Main {
             return a;
         }
     }
+
 }

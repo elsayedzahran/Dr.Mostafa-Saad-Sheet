@@ -1,52 +1,31 @@
+package A;
+// problim link
+/*
+https://codeforces.com/contest/742/problem/A
+ */
 
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class Main {
+public class ArpasHardExamAndMehrdadsNaiveCheat {
     static Reader input = new Reader();
-    static boolean[] prime;
     public static void main(String[] args) {
-        int t = input.nextInt();
-        while(t-- > 0){
-            int n = input.nextInt();
-            int[] arr = input.nextIntArray(n);
 
+        int n = input.nextInt();
+        if (n <= 1){
+            System.out.println(n == 0 ? 1 : 8);
+            return;
         }
-
-    }
-
-
-
-    private static void seive(int n) {
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
-            }
+        int mod = n%4;
+        if (mod == 0){
+            System.out.println(6);
+        } else if (mod == 1) {
+            System.out.println(8);
+        } else if (mod == 2) {
+            System.out.println(4);
+        }else {
+            System.out.println(2);
         }
-    }
-
-    public static long gcd(long a, long b) {
-        if (b == 0)
-            return a;
-        return gcd(b, a % b);
-    }
-
-
-    private static boolean isPrime(int n) {
-        if (n <= 1)
-            return false;
-        if (n <= 3)
-            return true;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
-                return false;
-            }
-        }
-        return true;
     }
 
     static class Reader extends PrintWriter {

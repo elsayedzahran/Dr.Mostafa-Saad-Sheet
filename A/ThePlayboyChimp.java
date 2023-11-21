@@ -1,59 +1,59 @@
+package A;
+// problim link
+/*
+https://vjudge.net/problem/UVA-10611
+ */
 
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class Main {
+public class ThePlayboyChimp {
     static Reader input = new Reader();
-    static boolean[] prime;
     public static void main(String[] args) {
-        int t = input.nextInt();
-        while(t-- > 0){
-            int n = input.nextInt();
-            int[] arr = input.nextIntArray(n);
 
+        int n = input.nextInt();
+        int[] arr = input.nextIntArray(n);
+        int q = input.nextInt();
+        int[] queries = input.nextIntArray(q);
+        for (int i = 0 ; i < q ; i++){
+            int shorter = findNearestLower(0, n-1, queries[i], arr);
+            int taller = findNearestHigher(0, n-1, queries[i], arr);
+            System.out.println((shorter == -1 ? "X" : shorter) + " " + (taller == -1 ? "X" : taller));
         }
-
     }
 
-
-
-    private static void seive(int n) {
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
+    private static int findNearestHigher(int l, int r, int query, int[] arr) {
+        int ans = -1;
+        while (l <= r){
+            int mid = (l + r)/2;
+            if (arr[mid] > query){
+                ans = mid;
+                r = mid - 1;
+            }else{
+                l = mid + 1;
             }
         }
+        return ans != -1 ? arr[ans] : ans;
     }
 
-    public static long gcd(long a, long b) {
-        if (b == 0)
-            return a;
-        return gcd(b, a % b);
-    }
-
-
-    private static boolean isPrime(int n) {
-        if (n <= 1)
-            return false;
-        if (n <= 3)
-            return true;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
-                return false;
+    private static int findNearestLower(int l, int r, int query, int[] arr) {
+        int ans = -1;
+        while (l <= r){
+            int mid = (l + r)/2;
+            if (arr[mid] < query){
+                ans = mid;
+                l = mid + 1;
+            }else{
+                r = mid - 1;
             }
         }
-        return true;
+        return ans != -1 ? arr[ans] : ans;
     }
 
     static class Reader extends PrintWriter {
 
         private final BufferedReader r;
         private StringTokenizer st;
-        // standard input
 
         public Reader() {
             this(System.in, System.out);

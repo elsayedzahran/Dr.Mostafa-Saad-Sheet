@@ -1,52 +1,31 @@
+package A;
+// problim link
+/*
+https://codeforces.com/contest/365/problem/A
+ */
+
 
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class Main {
+public class GoodNumber {
     static Reader input = new Reader();
-    static boolean[] prime;
     public static void main(String[] args) {
-        int t = input.nextInt();
-        while(t-- > 0){
-            int n = input.nextInt();
-            int[] arr = input.nextIntArray(n);
+        int n = input.nextInt();
+        int m = input.nextInt();
 
-        }
-
-    }
-
-
-
-    private static void seive(int n) {
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
+        int cnt = 0;
+        for (int i = 0 ; i < n ; i++){
+            String x = input.nextLine();
+            boolean ok = true;
+            for(int j = 0; j <= m; j++){
+                if(x.indexOf(j +'0') < 0) ok = false;
+            }
+            if (ok){
+                cnt++;
             }
         }
-    }
-
-    public static long gcd(long a, long b) {
-        if (b == 0)
-            return a;
-        return gcd(b, a % b);
-    }
-
-
-    private static boolean isPrime(int n) {
-        if (n <= 1)
-            return false;
-        if (n <= 3)
-            return true;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
-                return false;
-            }
-        }
-        return true;
+        System.out.println(cnt);
     }
 
     static class Reader extends PrintWriter {

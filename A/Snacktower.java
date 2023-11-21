@@ -1,54 +1,33 @@
+package A;
+// problim link
+/*
+https://codeforces.com/problemset/problem/767/A
+ */
 
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class Main {
+public class Snacktower {
     static Reader input = new Reader();
-    static boolean[] prime;
-    public static void main(String[] args) {
-        int t = input.nextInt();
-        while(t-- > 0){
-            int n = input.nextInt();
-            int[] arr = input.nextIntArray(n);
-
+    static PrintWriter output = new PrintWriter(System.out);
+    public static void main(String[] args) throws IOException {
+        int n = input.nextInt();
+        int[] snack = new int[n+1];
+        for (int i = 1 ; i <= n ; i++){
+            snack[i] = input.nextInt();
         }
-
-    }
-
-
-
-    private static void seive(int n) {
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
+        boolean[] arrived = new boolean[n+1];
+        int counter = n;
+        for (int i = 1 ; i <= n ; i++){
+            arrived[snack[i]] = true;
+            while (arrived[counter]){
+                output.print(counter-- + " ");
             }
+            output.println();
         }
+        output.close();
+
     }
-
-    public static long gcd(long a, long b) {
-        if (b == 0)
-            return a;
-        return gcd(b, a % b);
-    }
-
-
-    private static boolean isPrime(int n) {
-        if (n <= 1)
-            return false;
-        if (n <= 3)
-            return true;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     static class Reader extends PrintWriter {
 
         private final BufferedReader r;
@@ -88,7 +67,7 @@ public class Main {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if (s == null || s == "\n") return false;
+            if (s == null) return false;
             st = new StringTokenizer(s);
             return true;
         }
@@ -129,4 +108,5 @@ public class Main {
             return a;
         }
     }
+
 }

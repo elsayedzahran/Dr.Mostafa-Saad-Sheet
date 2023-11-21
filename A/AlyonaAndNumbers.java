@@ -1,52 +1,33 @@
+package A;
+// problim link
+/*
+https://codeforces.com/contest/682/problem/A
+ */
 
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class Main {
+public class AlyonaAndNumbers {
     static Reader input = new Reader();
-    static boolean[] prime;
     public static void main(String[] args) {
-        int t = input.nextInt();
-        while(t-- > 0){
-            int n = input.nextInt();
-            int[] arr = input.nextIntArray(n);
+        int n = input.nextInt();
+        int m = input.nextInt();
+        int[] freqA = new int[5];
+        int[] freqB = new int[5];
 
+        for (int i = 1 ; i <= n ; i++){
+            freqA[i%5]++;
         }
-
-    }
-
-
-
-    private static void seive(int n) {
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
-            }
+        for (int i = 1 ; i <= m ; i++){
+            freqB[i%5]++;
         }
-    }
+        long result = ((long)freqA[0] * freqB[0]);
 
-    public static long gcd(long a, long b) {
-        if (b == 0)
-            return a;
-        return gcd(b, a % b);
-    }
-
-
-    private static boolean isPrime(int n) {
-        if (n <= 1)
-            return false;
-        if (n <= 3)
-            return true;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
-                return false;
-            }
+        for (int i = 1; i < 5; i++) {
+            result += (long)freqA[i] * freqB[5 - i];
         }
-        return true;
+        System.out.println(result);
+
     }
 
     static class Reader extends PrintWriter {

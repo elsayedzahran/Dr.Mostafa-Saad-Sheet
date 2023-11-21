@@ -1,52 +1,18 @@
+package A;
+// problim link
+/*
+https://codeforces.com/contest/486/problem/A
+ */
 
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class Main {
+public class CalculatingFunction {
     static Reader input = new Reader();
-    static boolean[] prime;
     public static void main(String[] args) {
-        int t = input.nextInt();
-        while(t-- > 0){
-            int n = input.nextInt();
-            int[] arr = input.nextIntArray(n);
 
-        }
-
-    }
-
-
-
-    private static void seive(int n) {
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
-            }
-        }
-    }
-
-    public static long gcd(long a, long b) {
-        if (b == 0)
-            return a;
-        return gcd(b, a % b);
-    }
-
-
-    private static boolean isPrime(int n) {
-        if (n <= 1)
-            return false;
-        if (n <= 3)
-            return true;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
-                return false;
-            }
-        }
-        return true;
+        long n = input.nextLong();
+        System.out.println(n % 2 == 0 ? (n/2) : ((n + 1) / 2 * -1));
     }
 
     static class Reader extends PrintWriter {

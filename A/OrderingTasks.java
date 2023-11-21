@@ -1,52 +1,73 @@
+package A;
+// problim link
+/*
+https://vjudge.net/problem/UVA-10305
+ */
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 import java.util.StringTokenizer;
 
-public class Main {
+public class OrderingTasks {
     static Reader input = new Reader();
-    static boolean[] prime;
-    public static void main(String[] args) {
-        int t = input.nextInt();
-        while(t-- > 0){
-            int n = input.nextInt();
-            int[] arr = input.nextIntArray(n);
+    static PrintWriter output = new PrintWriter(System.out);
+    static List<Integer>[] graph;
+    static int n;
+    static int m;
+    static char[][] grid;
+    static List<String> path;
+    static int[] X = {0, 0, -1, 1, 1, -1, 1, -1};
+    static int[] Y = {1, -1, 0, 0, 1, -1, -1, 1};
+    static int[] per;
+    static boolean[] vis;
+    static boolean[][] visited;
+    static Stack<Integer> topoSort;
+    public static void main(String[] args) throws IOException {
+        while (true) {
+            n = input.nextInt();
+            m = input.nextInt();
+
+            if (n == 0)
+                break;
+
+            vis = new boolean[n + 1];
+            topoSort = new Stack<>();
+            per = new int[n + 1];
+            graph = new ArrayList[n + 1];
+            for (int i = 1 ; i <= n ; i++){
+                graph[i] = new ArrayList<>();
+            }
+
+            for (int i = 0; i < m; i++) {
+                int x = input.nextInt();
+                int y = input.nextInt();
+                graph[x].add(y);
+            }
+            for (int i = 1 ; i <= n ; i++) {
+                if (!vis[i]) {
+                    dfs(i);
+                }
+            }
+
+            while (!topoSort.isEmpty()){
+                System.out.print(topoSort.pop() + " ");
+            }
+            System.out.println();
 
         }
 
     }
 
-
-
-    private static void seive(int n) {
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
+    private static void dfs(int i) {
+        vis[i] = true;
+        for (int num : graph[i]){
+            if (!vis[num]){
+                dfs(num);
             }
         }
-    }
-
-    public static long gcd(long a, long b) {
-        if (b == 0)
-            return a;
-        return gcd(b, a % b);
-    }
-
-
-    private static boolean isPrime(int n) {
-        if (n <= 1)
-            return false;
-        if (n <= 3)
-            return true;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
-                return false;
-            }
-        }
-        return true;
+        topoSort.push(i);
     }
 
     static class Reader extends PrintWriter {
@@ -129,4 +150,5 @@ public class Main {
             return a;
         }
     }
+
 }

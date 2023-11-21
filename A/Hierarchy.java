@@ -1,52 +1,68 @@
+package A;
+// problim link
+/*
+https://vjudge.net/problem/SPOJ-MAKETREE
+ */
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
-public class Main {
+public class Hierarchy {
     static Reader input = new Reader();
-    static boolean[] prime;
-    public static void main(String[] args) {
-        int t = input.nextInt();
-        while(t-- > 0){
-            int n = input.nextInt();
-            int[] arr = input.nextIntArray(n);
-
+    static PrintWriter output = new PrintWriter(System.out);
+    static List<Integer>[] graph;
+    static List<Integer> topoSort;
+    static int[] per;
+    static boolean[] vis;
+    // study topological sort and back :)
+    public static void main(String[] args) throws IOException {
+        int n = input.nextInt();
+        int m = input.nextInt();
+        graph = new List[n + 1];
+        for (int i = 0 ; i <= n ; i++){
+            graph[i] = new ArrayList<>();
         }
-
-    }
-
-
-
-    private static void seive(int n) {
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
+        per = new int[n+1];
+        topoSort = new ArrayList<>();
+        vis = new boolean[n + 1];
+        for (int i = 0 ; i < m ; i++){
+            int rep = input.nextInt();
+            while (rep-- > 0){
+                int node = input.nextInt();
+                graph[i+1].add(node);
             }
         }
-    }
-
-    public static long gcd(long a, long b) {
-        if (b == 0)
-            return a;
-        return gcd(b, a % b);
-    }
-
-
-    private static boolean isPrime(int n) {
-        if (n <= 1)
-            return false;
-        if (n <= 3)
-            return true;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
-                return false;
+        for (int i = 1 ; i <= n ; i++){
+            if (! vis[i]){
+                dfs(i);
             }
         }
-        return true;
+//        for (int i = 0 ; i < topoSort.size() ; i++){
+//            System.out.print(topoSort.get(i) + " ");
+//        }
+        System.out.println();
+        int pos = 0;
+        for (int i = n - 1 ; i >= 0 ; i--){
+            int child = topoSort.get(i);
+            per[child] = pos;
+            pos = child;
+        }
+        for (int i = 1 ; i <= n ; i++){
+            output.println(per[i]);
+        }
+        output.close();
+    }
+
+    private static void dfs(int i) {
+        vis[i] = true;
+        for (int sub : graph[i]){
+            if (! vis[sub]) {
+                dfs(sub);
+            }
+        }
+        topoSort.add(i);
     }
 
     static class Reader extends PrintWriter {
@@ -88,7 +104,7 @@ public class Main {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if (s == null || s == "\n") return false;
+            if (s == null) return false;
             st = new StringTokenizer(s);
             return true;
         }
@@ -129,4 +145,5 @@ public class Main {
             return a;
         }
     }
+
 }

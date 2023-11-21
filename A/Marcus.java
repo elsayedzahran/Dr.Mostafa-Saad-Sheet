@@ -1,52 +1,74 @@
+package A;
+// problim link
+/*
+https://vjudge.net/problem/UVA-10452
+ */
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
-public class Main {
+public class Marcus {
     static Reader input = new Reader();
-    static boolean[] prime;
-    public static void main(String[] args) {
+    static PrintWriter output = new PrintWriter(System.out);
+    static List<Integer>[] graph;
+    static int n;
+    static int m;
+    static char[][] grid;
+    static List<String> path;
+    static int[] X = {0, 0, -1, 1, 1, -1, 1, -1};
+    static int[] Y = {1, -1, 0, 0, 1, -1, -1, 1};
+    static int[] per;
+    static boolean[] vis;
+    static boolean[][] visited;
+    static String word = "IEHOVA#";
+    public static void main(String[] args) throws IOException {
         int t = input.nextInt();
-        while(t-- > 0){
-            int n = input.nextInt();
-            int[] arr = input.nextIntArray(n);
+        while (t-- > 0) {
+            n = input.nextInt();
+            m = input.nextInt();
+            grid = new char[n][];
+            path = new ArrayList<>();
+
+            for (int i = 0; i < n; i++) {
+                grid[i] = input.next().toCharArray();
+            }
+
+            for (int j = 0; j < m; j++) {
+                if (grid[n - 1][j] == '@') {
+                    dfs(n - 1, j, 0);
+                }
+            }
+
+            System.out.print(path.get(0));
+            for (int i = 1 ; i < path.size() ; i++){
+                System.out.print(" " + path.get(i));
+            }
+            System.out.println();
 
         }
 
     }
 
+    private static void dfs(int i, int j, int idx) {
+        if (grid[i][j] == '#')
+            return;
+        for (int k = 0 ; k < 3 ; k++){
+            if (valid(i + X[k], j + Y[k]) && grid[i + X[k]][j + Y[k]] == word.charAt(idx)) {
+                if (k == 0)
+                    path.add("right");
+                else if (k == 1)
+                    path.add("left");
+                else
+                    path.add("forth");
+                dfs(i + X[k], j + Y[k], idx+1);
 
-
-    private static void seive(int n) {
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
             }
         }
     }
-
-    public static long gcd(long a, long b) {
-        if (b == 0)
-            return a;
-        return gcd(b, a % b);
-    }
-
-
-    private static boolean isPrime(int n) {
-        if (n <= 1)
-            return false;
-        if (n <= 3)
-            return true;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
-                return false;
-            }
-        }
-        return true;
+    private static boolean valid(int i, int j){
+        return i < n && i >= 0 && j < m && j >= 0;
     }
 
     static class Reader extends PrintWriter {
@@ -129,4 +151,5 @@ public class Main {
             return a;
         }
     }
+
 }

@@ -1,59 +1,55 @@
+package A;
+// problim link
+/*
+https://codeforces.com/contest/165/problem/B
+ */
 
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class Main {
+public class BurningMidnightOil {
     static Reader input = new Reader();
-    static boolean[] prime;
     public static void main(String[] args) {
-        int t = input.nextInt();
-        while(t-- > 0){
-            int n = input.nextInt();
-            int[] arr = input.nextIntArray(n);
 
-        }
+
+        int n = input.nextInt();
+        int k = input.nextInt();
+        int ans = binarySearch(1, 1000000000, k, n);
+        System.out.println(ans);
 
     }
 
-
-
-    private static void seive(int n) {
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
+    private static int binarySearch(int l, int r, int k, int n) {
+        int ans = 0;
+        while (l <= r){
+            int mid = (l + r)/2;
+            if (valid(mid, k, n)){
+                ans = mid;
+                r = mid - 1;
+            }else{
+                l = mid + 1;
             }
         }
+        return ans;
     }
 
-    public static long gcd(long a, long b) {
-        if (b == 0)
-            return a;
-        return gcd(b, a % b);
-    }
-
-
-    private static boolean isPrime(int n) {
-        if (n <= 1)
-            return false;
-        if (n <= 3)
-            return true;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
-                return false;
-            }
+    private static boolean valid(int dis, int k, int n) {
+        int con = k;
+        n -= dis;
+        int div = dis / k;
+        while (n > 0 && div > 0){
+            n -= div;
+            k *= con;
+            div = dis / k;
         }
-        return true;
+        return n > 0 ? false : true;
     }
+
 
     static class Reader extends PrintWriter {
 
         private final BufferedReader r;
         private StringTokenizer st;
-        // standard input
 
         public Reader() {
             this(System.in, System.out);

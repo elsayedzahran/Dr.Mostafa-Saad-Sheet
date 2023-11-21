@@ -1,59 +1,58 @@
+package A;
+// problim link
+/*
+https://codeforces.com/contest/382/problem/A
+ */
 
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class Main {
+public class KseniaAndPanScales {
     static Reader input = new Reader();
-    static boolean[] prime;
     public static void main(String[] args) {
-        int t = input.nextInt();
-        while(t-- > 0){
-            int n = input.nextInt();
-            int[] arr = input.nextIntArray(n);
 
+        char[] string = input.next().toCharArray();
+        char[] weights = input.next().toCharArray();
+
+        int left = 0;
+        for (int i = 0 ; i < string.length ; i++){
+            if (string[i] == '|'){
+                break;
+            }
+            left++;
         }
-
-    }
-
-
-
-    private static void seive(int n) {
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
+        String stringL = "";
+        String stringR = "";
+        int idx = 0;
+        for (int i = 0 ; i < string.length ; i++){
+            if (string[i] == '|'){
+                continue;
+            }else if (i < left){
+                stringL += string[i];
+            }else {
+                stringR += string[i];
             }
         }
-    }
-
-    public static long gcd(long a, long b) {
-        if (b == 0)
-            return a;
-        return gcd(b, a % b);
-    }
-
-
-    private static boolean isPrime(int n) {
-        if (n <= 1)
-            return false;
-        if (n <= 3)
-            return true;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
-                return false;
+        int addSize = weights.length;
+        while (idx < addSize){
+            if (stringL.length() < stringR.length()){
+                stringL += weights[idx++];
+            }else {
+                stringR += weights[idx++];
             }
         }
-        return true;
+        if (stringL.length() != stringR.length()){
+            System.out.println("Impossible");
+            return;
+        }
+        System.out.println(stringL + '|' + stringR);
+
     }
 
     static class Reader extends PrintWriter {
 
         private final BufferedReader r;
         private StringTokenizer st;
-        // standard input
 
         public Reader() {
             this(System.in, System.out);

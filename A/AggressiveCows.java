@@ -1,59 +1,62 @@
+package A;
+// problim link
+/*
+https://vjudge.net/problem/SPOJ-AGGRCOW
+ */
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class Main {
+public class AggressiveCows {
     static Reader input = new Reader();
-    static boolean[] prime;
     public static void main(String[] args) {
+
         int t = input.nextInt();
-        while(t-- > 0){
+
+        while (t-- > 0) {
+
             int n = input.nextInt();
+            int c = input.nextInt();
             int[] arr = input.nextIntArray(n);
-
+            Arrays.sort(arr);
+            int ans = binarySearch(0, 1000000000, arr, c);
+            System.out.println(ans);
         }
-
     }
 
-
-
-    private static void seive(int n) {
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
+    private static int binarySearch(int l, int r, int[] arr, int c) {
+        int ans = 0;
+        while (l <= r){
+            int mid = (l + r)/2;
+            if (valid(mid, arr, c)){
+                ans = mid;
+                l = mid + 1;
+            }else{
+                r = mid - 1;
             }
         }
+        return ans;
     }
 
-    public static long gcd(long a, long b) {
-        if (b == 0)
-            return a;
-        return gcd(b, a % b);
-    }
-
-
-    private static boolean isPrime(int n) {
-        if (n <= 1)
-            return false;
-        if (n <= 3)
-            return true;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
-                return false;
+    private static boolean valid(int dis, int[] arr, int c) {
+        c--;
+        int start = arr[0];
+        for (int i = 1 ; i < arr.length && c > 0 ; i++){
+            if (start + dis <= arr[i]){
+                c--;
+                start = arr[i];
             }
         }
-        return true;
+        return c == 0 ? true : false;
     }
+
+
 
     static class Reader extends PrintWriter {
 
         private final BufferedReader r;
         private StringTokenizer st;
-        // standard input
 
         public Reader() {
             this(System.in, System.out);

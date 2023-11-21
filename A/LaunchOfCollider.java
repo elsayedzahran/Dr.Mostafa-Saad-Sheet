@@ -1,59 +1,44 @@
+package A;
+// problim link
+/*
+https://codeforces.com/contest/699/problem/A
+ */
 
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class Main {
+public class LaunchOfCollider {
     static Reader input = new Reader();
-    static boolean[] prime;
     public static void main(String[] args) {
-        int t = input.nextInt();
-        while(t-- > 0){
-            int n = input.nextInt();
-            int[] arr = input.nextIntArray(n);
+        int n = input.nextInt();
+        char[] direction = input.next().toCharArray();
 
-        }
+        int[] arr = input.nextIntArray(n);
 
-    }
-
-
-
-    private static void seive(int n) {
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
+        int res = -1;
+        int start = -1;
+        for (int i = 0 ; i < n ; i++){
+            if (start == -1){
+                if (direction[i] == 'R'){
+                    start = i;
+                }
+            }else{
+                if (direction[i] == 'R'){
+                    start = i;
+                }else{
+                    res = res == -1 ? (arr[i] - arr[start])/2 : Math.min(res, (arr[i] - arr[start])/2);
+                    start = -1;
+                }
             }
         }
-    }
 
-    public static long gcd(long a, long b) {
-        if (b == 0)
-            return a;
-        return gcd(b, a % b);
-    }
-
-
-    private static boolean isPrime(int n) {
-        if (n <= 1)
-            return false;
-        if (n <= 3)
-            return true;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
-                return false;
-            }
-        }
-        return true;
+        System.out.println(res);
     }
 
     static class Reader extends PrintWriter {
 
         private final BufferedReader r;
         private StringTokenizer st;
-        // standard input
 
         public Reader() {
             this(System.in, System.out);

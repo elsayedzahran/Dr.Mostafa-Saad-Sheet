@@ -1,52 +1,48 @@
+package A;
+// problim link
+/*
+https://codeforces.com/contest/404/problem/A
+ */
 
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class Main {
+public class ValeraAndX {
     static Reader input = new Reader();
-    static boolean[] prime;
     public static void main(String[] args) {
-        int t = input.nextInt();
-        while(t-- > 0){
-            int n = input.nextInt();
-            int[] arr = input.nextIntArray(n);
 
+        int n = input.nextInt();
+        char[][] paper = new char[n][n];
+        for (int i = 0 ; i < n ; i++){
+            paper[i] = input.next().toCharArray();
         }
 
-    }
+        char charX = paper[0][0];
+        for (int i = 0 ; i < n ; i++){
 
-
-
-    private static void seive(int n) {
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
+            if (charX != paper[i][i]){
+                System.out.println("NO");
+                return;
             }
         }
-    }
-
-    public static long gcd(long a, long b) {
-        if (b == 0)
-            return a;
-        return gcd(b, a % b);
-    }
-
-
-    private static boolean isPrime(int n) {
-        if (n <= 1)
-            return false;
-        if (n <= 3)
-            return true;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
-                return false;
+        for (int i = 0, j = n - 1 ; i < n && j >=0 ; i++, j--){
+            if (charX != paper[i][j]){
+                System.out.println("NO");
+                return;
             }
         }
-        return true;
+        char common = paper[0][1];
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                if(i != j && j != (n-1) - i) {
+                    if (paper[i][j] != common || paper[i][j] == charX) {
+                        System.out.println("NO");
+                        return;
+                    }
+                }
+            }
+        }
+        System.out.println("YES");
     }
 
     static class Reader extends PrintWriter {

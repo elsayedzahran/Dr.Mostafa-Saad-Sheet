@@ -1,52 +1,34 @@
+package A;
+// problim link
+/*
+https://codeforces.com/contest/218/problem/A
+ */
 
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class Main {
+public class MountainScenery {
     static Reader input = new Reader();
-    static boolean[] prime;
     public static void main(String[] args) {
-        int t = input.nextInt();
-        while(t-- > 0){
-            int n = input.nextInt();
-            int[] arr = input.nextIntArray(n);
+        int n = input.nextInt();
+        int k = input.nextInt();
+        int size = 2 * n + 1;
+        int[] arr = new int[size];
 
+        for (int i = 0 ; i < size ; i++){
+            arr[i] = input.nextInt();
         }
-
-    }
-
-
-
-    private static void seive(int n) {
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
+        while (k > 0) {
+            for (int i = 1; i < size && k > 0; i += 2) {
+                if (arr[i] > arr[i-1] +1 && arr[i] > arr[i+1] +1) {
+                    k--;
+                    arr[i]--;
+                }
             }
         }
-    }
-
-    public static long gcd(long a, long b) {
-        if (b == 0)
-            return a;
-        return gcd(b, a % b);
-    }
-
-
-    private static boolean isPrime(int n) {
-        if (n <= 1)
-            return false;
-        if (n <= 3)
-            return true;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
-                return false;
-            }
+        for (int i = 0 ; i < size ; i++){
+            System.out.print(arr[i] + " ");
         }
-        return true;
     }
 
     static class Reader extends PrintWriter {
