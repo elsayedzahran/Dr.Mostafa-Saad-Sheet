@@ -1,7 +1,39 @@
+import B.BurglarAndMatches;
+
 import java.io.*;
 import java.util.StringTokenizer;
 
 public class HelperClass {
+    static int fib(int n){
+        if (n <= 1){
+            return n;
+        }
+        return fib(n-1) + fib(n-2);
+    }
+    static int gcd(int a, int b){
+        // greatest common divisor
+        if (b == 0){
+            return a;
+        }
+        return gcd(b, a%b);
+    }
+    static int lcm(int a, int b){
+        // least common multiple
+        return a * b / gcd(a, b);
+    }
+
+    static class Pair implements Comparable<Pair> {
+        int a, b;
+        // if you sort it will be in descending order
+        @Override
+        public int compareTo(Pair obj) {
+            if (b == obj.b) {
+                return Integer.compare(obj.a, a);
+            } else {
+                return Integer.compare(obj.b, b);
+            }
+        }
+    }
     static class Reader extends PrintWriter {
         private final BufferedReader r;
         private StringTokenizer st;
