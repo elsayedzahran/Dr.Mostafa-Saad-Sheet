@@ -21,6 +21,34 @@ public class HelperClass {
         // least common multiple
         return a * b / gcd(a, b);
     }
+    static int fastPower(int b, int p){
+        if (p == 0){
+            return 1;
+        }
+        int sq = fastPower(b, p/2);
+        sq *= sq;
+        if (p % 2 == 0){
+            sq *= b;
+        }
+        return sq;
+    }
+    static long NCR(long n, long r){
+        if (r == 0 || r == n) {
+            return 1;
+        } else {
+            return (n * NCR(n - 1, r - 1)) / r;
+        }
+    }
+    static int sumPower(int a, int k){
+        if (k == 0){
+            return 0;
+        }
+        if (k % 2 == 1){
+            return a * (1 + sumPower(a, k - 1));
+        }
+        int half  = sumPower(a, k/2);
+        return half * (1 + half - sumPower(a, k/2 - 1));
+    }
 
     static class Pair implements Comparable<Pair> {
         int a, b;
