@@ -1,3 +1,9 @@
+package B;
+// problim link
+/*
+https://codeforces.com/contest/766/problem/B
+*/
+
 
 import java.io.*;
 import java.util.ArrayList;
@@ -5,71 +11,66 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class Main {
+public class MahmoudAndATriangle {
+    static char[][] grid;
+    static boolean[][] vis;
+    static boolean[] visited;
+    static int n,m;
+    static int[] X = {1, -1, 0, 0};
+    static int[] Y = {0, 0, 1, -1};
+    static int res;
     static Reader input = new Reader();
-    static boolean[] prime;
-    static boolean[] vis;
-    static List<Node> nodes;
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        int n = input.nextInt();
+        int[] arr = input.nextIntArray(n);
+        Arrays.sort(arr);
 
-        int t = input.nextInt();
-        while (t-- > 0) {
-            int n = input.nextInt();
-            int k = input.nextInt();
-            int[] arr = input.nextIntArray(n);
-            boolean isSorted = true;
-            for (int i = 1 ; i < n && isSorted ; i++){
-                if (arr[i] < arr[i-1])
-                    isSorted = false;
-            }
-            if (isSorted) {
+        for (int i = 2 ; i < n ; i++){
+            if (valid(arr, i)){
                 System.out.println("YES");
-                continue;
-            }
-            System.out.println(k > 1 ? "YES" : "NO");
-
-        }
-    }
-
-    static class Node {
-        char label;
-        Node left, right;
-        public Node(char item){
-            label = item;
-            left = right = null;
-        }
-    }
-
-    private static void seive(int n) {
-        for (int i = 0; i <= n; i++)
-            prime[i] = true;
-
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p] == true) {
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
+                return;
             }
         }
+        System.out.println("NO");
+
     }
 
-    public static long gcd(long a, long b) {
-        if (b == 0)
-            return a;
-        return gcd(b, a % b);
+    private static boolean valid(int[] arr, int i) {
+        return (arr[i] + arr[i-1] > arr[i-2]) && (arr[i] + arr[i-2] > arr[i-1]) && (arr[i-1] + arr[i-2] > arr[i]);
     }
 
+    public static class Pair implements Comparable<Pair>{
+        int first;
+        int second;
+        public Pair(int first, int second){
+            this.first = first;
+            this.second = second;
+        }
 
-    private static boolean isPrime(int n) {
-        if (n <= 1)
-            return false;
-        if (n <= 3)
-            return true;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
-                return false;
+        @Override
+        public int compareTo(Pair o) {
+            if (o.first != first){
+                return first - o.first;
+            }
+            return second - o.second;
+        }
+    }
+
+    private static void dfs(int x, int y, char ch) {
+        vis[x][y] = true;
+        for (int i = 0 ; i < 4 ; i++){
+            int new_x = x + X[i];
+            int new_y = y + Y[i];
+            if (valid(new_x, new_y) && grid[new_x][new_y] != '.' && !visited[grid[new_x][new_y]]){
+                visited[grid[new_x][new_y]] = true;
+                dfs(new_x, new_y, ch);
+                res++;
             }
         }
-        return true;
+    }
+
+    private static boolean valid(int i, int j) {
+        return i < n && j < m && i >= 0 && j >= 0 && !vis[i][j];
     }
 
     static class Reader extends PrintWriter {
@@ -145,6 +146,11 @@ public class Main {
             for (int i = 0; i < n; i++) a[i] = (int) nextInt();
             return a;
         }
+        int[] nextIntArrayOneBased(int n) {
+            int[] a = new int[n + 1];
+            for (int i = 1; i <= n; i++) a[i] = (int) nextInt();
+            return a;
+        }
 
         long[] nextLongArray(int n) {
             long[] a = new long[n];
@@ -153,3 +159,4 @@ public class Main {
         }
     }
 }
+
